@@ -1,1 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OncoPredict AI - Early Cancer Prediction Platform</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
 
+  <!-- Navigation Bar -->
+  <header>
+    <div class="brand">
+      <div class="brand-icon">🔬</div>
+      <div class="brand-title">OncoPredict AI</div>
+    </div>
+    <div class="status-badge">
+      <div class="pulse-dot"></div>
+      <span>ML Engine Active & Model Ready</span>
+    </div>
+  </header>
+
+  <!-- Container -->
+  <div class="container">
+
+    <!-- Hero Section -->
+    <div class="hero">
+      <h1>Early Cancer Prediction System</h1>
+      <p class="hero-subtitle">
+        Multi-modal Machine Learning platform for early diagnostic screening of Brain Tumors, Oral Cancer, and Cervical Cancer risk factors.
+      </p>
+    </div>
+
+    <!-- Navigation Tabs -->
+    <div class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab('brain')">
+        🧠 Brain Tumor MRI
+      </button>
+      <button class="tab-btn" onclick="switchTab('oral')">
+        👄 Oral Cancer Detector
+      </button>
+      <button class="tab-btn" onclick="switchTab('cervical')">
+        🩸 Cervical Cancer Risk
+      </button>
+      <button class="tab-btn" onclick="switchTab('stats')">
+        📊 Model Metrics & Performance
+      </button>
+    </div>
+
+    <!-- ==================== TAB 1: BRAIN TUMOR MRI ==================== -->
+    <div id="tab-brain" class="tab-content active">
+      <div class="grid-2">
+
+        <!-- Input Card -->
+        <div class="glass-card">
+          <h2 class="card-title">🧠 Brain MRI Image Input</h2>
+          
+          <div class="upload-zone" id="brain-dropzone">
+            <div class="upload-icon">📁</div>
+            <div class="upload-text">Drag & drop MRI image here or click to browse</div>
+            <button class="btn-upload" type="button">Select MRI File</button>
+            <input type="file" id="brain-file-input" accept="image/*" style="display:none" onchange="handleBrainFileUpload(event)">
+          </div>
+
+          <div class="samples-bar">
+            <div class="samples-label">⚡ Quick Test Samples (Click to Run):</div>
+            <div class="sample-btns" id="brain-sample-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Output Card -->
+        <div class="glass-card">
+          <h2 class="card-title">🔍 Diagnostic MRI Analysis</h2>
+          
+          <div class="preview-box">
+            <img id="brain-preview-img" class="preview-img" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='1.5'><path d='M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96.44L2.04 12 7.04 4.06A2.5 2.5 0 0 1 9.5 2z'/><path d='M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96.44L21.96 12l-5-7.94A2.5 2.5 0 0 0 14.5 2z'/></svg>" alt="Preview">
+            <div id="brain-scan-line" class="scan-line"></div>
+          </div>
+
+          <div id="brain-results" style="display:none;">
+            <div class="result-header">
+              <div id="brain-badge" class="diagnosis-badge badge-normal">Awaiting Image</div>
+              <div>
+                <span class="confidence-val" id="brain-confidence">0%</span>
+                <span style="font-size:0.8rem; color:var(--text-muted);"> Confidence</span>
+              </div>
+            </div>
+
+            <div class="prob-list" id="brain-prob-list">
+              <!-- Probability bars populated here -->
+            </div>
+
+            <div class="rec-box" id="brain-recommendation">
+              Select or upload a Brain MRI scan image to evaluate model inference.
+            </div>
+          </div>
+
+          <div id="brain-placeholder" style="text-align:center; padding: 2rem; color: var(--text-muted);">
+            Upload an MRI image or click a quick sample above to run AI inference.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 2: ORAL CANCER ==================== -->
+    <div id="tab-oral" class="tab-content">
+      <div class="grid-2">
+
+        <!-- Input Card -->
+        <div class="glass-card">
+          <h2 class="card-title">👄 Oral Tissue / Lesion Photo</h2>
+          
+          <div class="upload-zone" id="oral-dropzone">
+            <div class="upload-icon">📷</div>
+            <div class="upload-text">Upload oral mucosa/lesion photo for analysis</div>
+            <button class="btn-upload" type="button">Select Lesion Photo</button>
+            <input type="file" id="oral-file-input" accept="image/*" style="display:none" onchange="handleOralFileUpload(event)">
+          </div>
+
+          <div class="samples-bar">
+            <div class="samples-label">⚡ Quick Test Samples:</div>
+            <div class="sample-btns" id="oral-sample-container">
+              <!-- Dynamically populated -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Output Card -->
+        <div class="glass-card">
+          <h2 class="card-title">🔬 Histopathology & Lesion Diagnostic</h2>
+          
+          <div class="preview-box">
+            <img id="oral-preview-img" class="preview-img" src="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' width='100' height='100' viewBox='0 0 24 24' fill='none' stroke='%2338bdf8' stroke-width='1.5'><path d='M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18z'/><path d='M12 8v4'/><path d='M12 16h.01'/></svg>" alt="Preview">
+            <div id="oral-scan-line" class="scan-line"></div>
+          </div>
+
+          <div id="oral-results" style="display:none;">
+            <div class="result-header">
+              <div id="oral-badge" class="diagnosis-badge badge-normal">Analyzing</div>
+              <div>
+                <span class="confidence-val" id="oral-confidence">0%</span>
+                <span style="font-size:0.8rem; color:var(--text-muted);"> Probability</span>
+              </div>
+            </div>
+
+            <div class="rec-box" id="oral-recommendation" style="margin-top:1rem;">
+              Clinical recommendation output here...
+            </div>
+          </div>
+
+          <div id="oral-placeholder" style="text-align:center; padding: 2rem; color: var(--text-muted);">
+            Upload a lesion photo or click a sample to run classification.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 3: CERVICAL CANCER RISK ==================== -->
+    <div id="tab-cervical" class="tab-content">
+      <div class="grid-2">
+
+        <!-- Questionnaire Card -->
+        <div class="glass-card">
+          <h2 class="card-title">🩸 Clinical Risk Factor Questionnaire</h2>
+          
+          <div class="samples-bar" style="margin-bottom: 1.5rem;">
+            <div class="samples-label">Presets:</div>
+            <div class="sample-btns">
+              <button class="btn-sample" onclick="loadCervicalPreset('low')">🟢 Low Risk Profile</button>
+              <button class="btn-sample" onclick="loadCervicalPreset('moderate')">🟡 Moderate Risk Profile</button>
+              <button class="btn-sample" onclick="loadCervicalPreset('high')">🔴 High Risk Profile</button>
+            </div>
+          </div>
+
+          <form id="cervical-form" onsubmit="event.preventDefault(); runCervicalPrediction();">
+            
+            <div class="form-group">
+              <div class="form-label">
+                <span>Patient Age:</span>
+                <span class="val" id="lbl-age">28</span>
+              </div>
+              <input type="range" id="inp-age" min="13" max="80" value="28" oninput="document.getElementById('lbl-age').innerText = this.value">
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>Number of Sexual Partners:</span>
+                <span class="val" id="lbl-partners">2</span>
+              </div>
+              <input type="range" id="inp-partners" min="1" max="25" value="2" oninput="document.getElementById('lbl-partners').innerText = this.value">
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>First Sexual Intercourse Age:</span>
+                <span class="val" id="lbl-first-sex">18</span>
+              </div>
+              <input type="range" id="inp-first-sex" min="10" max="40" value="18" oninput="document.getElementById('lbl-first-sex').innerText = this.value">
+            </div>
+
+            <div class="form-group">
+              <div class="form-label">
+                <span>Number of Pregnancies:</span>
+                <span class="val" id="lbl-pregnancies">1</span>
+              </div>
+              <input type="range" id="inp-pregnancies" min="0" max="15" value="1" oninput="document.getElementById('lbl-pregnancies').innerText = this.value">
+            </div>
+
+            <div class="switch-group">
+              <span>Smoker History</span>
+              <label class="switch">
+                <input type="checkbox" id="inp-smokes" onchange="toggleSmokingFields()">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div id="smoking-fields" style="display:none; margin-top: 0.5rem;">
+              <div class="form-group">
+                <div class="form-label"><span>Smoking Duration (Years):</span><span class="val" id="lbl-smoke-years">0</span></div>
+                <input type="range" id="inp-smoke-years" min="0" max="40" value="0" oninput="document.getElementById('lbl-smoke-years').innerText = this.value">
+              </div>
+            </div>
+
+            <div class="switch-group">
+              <span>Hormonal Contraceptives Use</span>
+              <label class="switch">
+                <input type="checkbox" id="inp-hc" onchange="toggleHcFields()">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div id="hc-fields" style="display:none; margin-top: 0.5rem;">
+              <div class="form-group">
+                <div class="form-label"><span>Hormonal Contraceptives (Years):</span><span class="val" id="lbl-hc-years">0</span></div>
+                <input type="range" id="inp-hc-years" min="0" max="30" value="0" oninput="document.getElementById('lbl-hc-years').innerText = this.value">
+              </div>
+            </div>
+
+            <div class="switch-group">
+              <span>History of Sexually Transmitted Infections (STDs)</span>
+              <label class="switch">
+                <input type="checkbox" id="inp-stds">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <div class="switch-group">
+              <span>Prior Clinical Diagnosis of Cancer / HPV</span>
+              <label class="switch">
+                <input type="checkbox" id="inp-dx-cancer">
+                <span class="slider"></span>
+              </label>
+            </div>
+
+            <button type="submit" class="btn-action">⚡ Evaluate Cervical Cancer Risk</button>
+          </form>
+        </div>
+
+        <!-- Risk Output Card -->
+        <div class="glass-card">
+          <h2 class="card-title">📈 Soft Voting Ensemble Risk Assessment</h2>
+          
+          <div id="cervical-results" style="display:none;">
+            <div class="result-header">
+              <div id="cervical-badge" class="diagnosis-badge badge-normal">Low Risk</div>
+              <div>
+                <span class="confidence-val" id="cervical-risk-val">0%</span>
+                <span style="font-size:0.8rem; color:var(--text-muted);"> Computed Risk</span>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1.2rem;">
+              <div style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.4rem;">Risk Index Scale:</div>
+              <div class="prob-track" style="height:12px;">
+                <div id="cervical-risk-fill" class="prob-fill" style="width:0%; background: linear-gradient(90deg, #10b981, #f59e0b, #ff4b5c);"></div>
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1.2rem;">
+              <h4 style="font-size:0.95rem; margin-bottom:0.6rem; color:var(--primary-cyan);">Ensemble Sub-Model Consensus:</h4>
+              <div id="cervical-model-breakdown" style="display:grid; grid-template-columns:1fr 1fr; gap:0.5rem; font-size:0.85rem;">
+                <!-- Filled via JS -->
+              </div>
+            </div>
+
+            <div style="margin-bottom: 1.2rem;">
+              <h4 style="font-size:0.95rem; margin-bottom:0.4rem; color:var(--primary-cyan);">Primary Identified Risk Factors:</h4>
+              <ul id="cervical-factors-list" style="padding-left:1.2rem; font-size:0.88rem; color:var(--text-main);">
+              </ul>
+            </div>
+
+            <div class="rec-box" id="cervical-recommendation">
+              Recommendation will appear after running evaluation.
+            </div>
+
+            <button type="button" class="btn-secondary" style="margin-top:1.5rem; width:100%;" onclick="window.print()">
+              🖨️ Export Printable Medical Diagnostic Summary
+            </button>
+          </div>
+
+          <div id="cervical-placeholder" style="text-align:center; padding: 3rem 1rem; color: var(--text-muted);">
+            Adjust clinical parameters on the left or select a preset profile to evaluate ensemble risk.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ==================== TAB 4: MODEL METRICS ==================== -->
+    <div id="tab-stats" class="tab-content">
+      <div class="stats-grid" id="stats-container">
+        <!-- Dynamically loaded via API -->
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <p>OncoPredict AI - Machine Learning Early Detection System &copy; 2026. Designed for Clinical Decision Support.</p>
+    </footer>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
